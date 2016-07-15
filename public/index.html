@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>UI Builder</title>
@@ -7,12 +8,28 @@
     <!--External library styles-->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 </head>
+
 <body ng-app="ui-creator">
-    <div class="row">
-        <div class="col-sm-12" id="main-div">
-            <!--Test content goes here-->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">UI Builder</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Dashboard Creator</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container" ng-controller="mainCtrl">
+        <div class="row">
+            <div class="col-sm-12" id="main-div">
+                <!--Test content goes here-->
+                Namastey Mallanna!!!
+            </div>
         </div>
     </div>
+
     <!--External Libraries-->
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -22,4 +39,5 @@
     <!--Angular scripts-->
     <script src="/scripts/controllers/mainCtrl.js"></script>
 </body>
+
 </html>

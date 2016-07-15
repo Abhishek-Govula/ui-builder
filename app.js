@@ -12,9 +12,9 @@ const portNo = configProperties.get("portNo");
 app.use('/', express.static(__dirname + '/public'));
 
 //App routes are set here
-app.route('*')
+app.route('/')
     .get(function (req, res) {
-        res.send("Namatey Mallanna!!");
+        res.sendFile(___dirname + '/public/index.html');
     });
 
 app.listen(portNo);
