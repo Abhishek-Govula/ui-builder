@@ -1,0 +1,11 @@
+{
+  "name": "iot_dashboard_maker",
+  "version": "1.0.0",
+  "description": "dashboard maker for iot applications",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nagasai_govula",
+  "license": "ISC"
+}
