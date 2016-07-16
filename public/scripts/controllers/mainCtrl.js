@@ -3,6 +3,13 @@ var rootApp = angular.module('ui-creator', ['ui.router', 'nvd3']);
 rootApp.controller('mainCtrl', ['$scope', '$q', function ($scope, $q) {
     $('#main-div').text("Jquery, Angular , UI Router, Bootstrap Libraries loaded");
 
+    // The heart of the application is here
+    //We open up the model and ask for the properties to be entered here
+    $scope.openSettings = function (elem) {
+        //Getting the modal and opening it explicity
+        $('#properties-modal').modal();
+    }
+
     $scope.changeLineData = function () {
         $scope.data = [{
             key: 'Test',
@@ -20,9 +27,19 @@ rootApp.controller('mainCtrl', ['$scope', '$q', function ($scope, $q) {
     }
     $scope.addNewRow = function () {
         var elementHTML = '<div class="row">' +
-            '<div class="col-sm-6">Sample content</div>' +
-            '<div class="col-sm-6">Sample content</div>' +
-            '</div>';
+                                '<div class="col-sm-6 dashboard-elem">'+
+                                    '<div class="elem-settings" ng-click="openSettings(this)">'+
+                                        '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
+                                    '</div>'+
+                                    '<div>Sample content</div>'+
+                                '</div>' +
+                                '<div class="col-sm-6 dashboard-elem">'+
+                                    '<div class="elem-settings" ng-click="openSettings(this)">'+
+                                        '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
+                                    '</div>'+
+                                    '<div>Sample content</div>'+
+                                '</div>'+
+                            '</div>';
         var elementCreated = createElement(elementHTML);
         elementCreated.then(function successCallback(successObj) {
             console.log(successObj);

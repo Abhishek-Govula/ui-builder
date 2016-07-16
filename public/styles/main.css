@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.dashboard-elem {
+    border: 1px solid #f00;
+    margin-bottom: 10px;
+    min-height: 50px;
+}
+.elem-settings{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background-color: #b7b7b7;
+    color: #fff;
+    padding: 5px 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.5;
+    -webkit-transition: all 100ms ease-in 20ms;
+    -moz-transition: all 100ms ease-in 20ms;
+    transition: all 100ms ease-in 20ms;
+}
+.elem-settings:hover{
+    opacity: 1;
+}
