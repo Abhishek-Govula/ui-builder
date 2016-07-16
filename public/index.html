@@ -7,6 +7,8 @@
 
     <!--External library styles-->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!--Charting, nvd3 styles-->
+    <link rel="stylesheet" href="/bower_components/nvd3/build/nv.d3.min.css">
 </head>
 
 <body ng-app="ui-creator">
@@ -21,12 +23,22 @@
             </ul>
         </div>
     </nav>
-    <div class="container" ng-controller="mainCtrl">
+    <div class="container" ng-controller="mainCtrl" id="dashboard-container">
         <div class="row">
-            <div class="col-sm-12" id="main-div">
+            <div class="col-sm-6 dashboard-elem" id="main-div">
                 <!--Test content goes here-->
                 Namastey Mallanna!!!
             </div>
+            <div class="col-sm-6 dashboard-elem">
+                <button type="button" class="btn btn-info" ng-click="addNewRow()">Add sample row</button>
+                <button type="button" class="btn btn-info" ng-click="changeLineData()">Change line data</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 dashboard-elem">
+                <nvd3 options="options" data="data" class="with-3d-shadow with-transitions"></nvd3>
+            </div>
+            <div class="col-sm-6 dashboard-elem">Sample content to go into next chart</div>
         </div>
     </div>
 
@@ -35,6 +47,12 @@
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+    <!--Charting libraries-->
+    <script src="/bower_components/d3/d3.min.js"></script>
+    <script src="/bower_components/nvd3/build/nv.d3.min.js"></script>
+    <!--Directive for charting libraries-->
+    <script src="/bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
 
     <!--Angular scripts-->
     <script src="/scripts/controllers/mainCtrl.js"></script>
