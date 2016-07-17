@@ -2,5 +2,20 @@
     width: 100%;
     padding: 7px 5px;
     border: 1px solid #cecccc;
-    border-radius: 3px;
+    border-radius: 4px;
+}
+.divider {
+    border-bottom: 1px solid #e2dcdc;
+    width: 100%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 7px;
+}
+#props-header {
+    text-align: center;
+    padding: 7px;
+    font-size: 17px;
+    font-style: normal;
+    color: #337ab7;
+    background-color: #f3f1f1;
 }
