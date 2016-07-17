@@ -12,10 +12,11 @@
 
     <!--User style sheets-->
     <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/elemProps.css">
 </head>
 
 <body ng-app="ui-creator">
-    <nav class="navbar navbar-default">
+    <!--<nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">UI Builder</a>
@@ -24,6 +25,28 @@
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="#">Dashboard Creator</a></li>
             </ul>
+        </div>
+    </nav>-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> 
+                </button>
+                <a class="navbar-brand" href="#">IoT Dashboard Builder</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="container" ng-controller="mainCtrl" id="dashboard-container">
@@ -54,15 +77,20 @@
     </div>
 
     <!--Modal for the elements-->
-    <div class="modal fade" tabindex="-1" role="dialog" id='properties-modal'>
+    <div class="modal fade" tabindex="-1" role="dialog" id='properties-modal' ng-controller="propertiesCtrl">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title">Element Properties</h4>
                 </div>
                 <div class="modal-body">
-                    <p>One fine body&hellip;</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Select type of graph</p>
+                            <select name="graph-type" id="graph-type" ng-options="option.name for option in data.availableGraphs track by option.id" ng-model="data.selectedOption" ng-change="graphOptionChanged()"></select>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -88,7 +116,10 @@
     <script src="/bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
 
     <!--Angular scripts-->
+    <!--Main controller-->
     <script src="/scripts/controllers/mainCtrl.js"></script>
+    <!--Components-->
+    <script src="/components/properties-module/propertiesCtrl.js"></script>
 </body>
 
 </html>

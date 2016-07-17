@@ -1,6 +1,6 @@
-var rootApp = angular.module('ui-creator', ['ui.router', 'nvd3']);
+var rootApp = angular.module('ui-creator', ['ui.router', 'nvd3', 'properties-module']);
 
-rootApp.controller('mainCtrl', ['$scope', '$q', function ($scope, $q) {
+rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q, $compile) {
     $('#main-div').text("Jquery, Angular , UI Router, Bootstrap Libraries loaded");
 
     // The heart of the application is here
@@ -43,8 +43,12 @@ rootApp.controller('mainCtrl', ['$scope', '$q', function ($scope, $q) {
         var elementCreated = createElement(elementHTML);
         elementCreated.then(function successCallback(successObj) {
             console.log(successObj);
+            console.log("Now scrolling to that element");
+            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
         }, function errorCallback(errorObj) {
             console.log(errorObj);
+        }, function notifyCallback(notifObj) {
+            console.log(notifObj);
         });
     }
     function createElement(elementText) {
@@ -55,7 +59,10 @@ rootApp.controller('mainCtrl', ['$scope', '$q', function ($scope, $q) {
             deferred.notify("Started the element creation");
 
             //Creating the sample row element
-            var sampleRowEl = angular.element(elementText + "Namastey Mallanan ");
+            var sampleRowEl = angular.element(elementText);
+
+            //Compiling the element
+            $compile(sampleRowEl)($scope);
 
             //Appending it to the container
             $('#dashboard-container').append(sampleRowEl);

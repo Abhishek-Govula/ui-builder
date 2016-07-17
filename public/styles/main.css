@@ -2,6 +2,9 @@ body{
     margin: 0;
     padding: 0;
 }
+.navbar {
+    border-radius: 0;
+}
 .dashboard-elem {
     border: 1px solid #f00;
     margin-bottom: 10px;
