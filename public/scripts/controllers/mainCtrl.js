@@ -27,24 +27,23 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q
     }
     $scope.addNewRow = function () {
         var elementHTML = '<div class="row">' +
-                                '<div class="col-sm-6 dashboard-elem">'+
-                                    '<div class="elem-settings" ng-click="openSettings(this)">'+
-                                        '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
-                                    '</div>'+
-                                    '<div>Sample content</div>'+
-                                '</div>' +
-                                '<div class="col-sm-6 dashboard-elem">'+
-                                    '<div class="elem-settings" ng-click="openSettings(this)">'+
-                                        '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
-                                    '</div>'+
-                                    '<div>Sample content</div>'+
-                                '</div>'+
-                            '</div>';
+            '<div class="col-sm-6 dashboard-elem">' +
+            '<div class="elem-settings" ng-click="openSettings(this)">' +
+            '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
+            '</div>' +
+            '<div>Sample content</div>' +
+            '</div>' +
+            '<div class="col-sm-6 dashboard-elem">' +
+            '<div class="elem-settings" ng-click="openSettings(this)">' +
+            '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
+            '</div>' +
+            '<div>Sample content</div>' +
+            '</div>' +
+            '</div>';
         var elementCreated = createElement(elementHTML);
         elementCreated.then(function successCallback(successObj) {
             console.log(successObj);
-            console.log("Now scrolling to that element");
-            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+            $("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
         }, function errorCallback(errorObj) {
             console.log(errorObj);
         }, function notifyCallback(notifObj) {
@@ -75,61 +74,16 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q
         return deferred.promise;
     }
 
-    $scope.options = {
-        chart: {
-            type: 'lineChart',
-            height: 450,
-            margin: {
-                top: 20,
-                right: 20,
-                bottom: 40,
-                left: 55
-            },
-            x: function (d) { return d.x; },
-            y: function (d) { return d.y; },
-            useInteractiveGuideline: true,
-            dispatch: {
-                stateChange: function (e) { console.log("stateChange"); },
-                changeState: function (e) { console.log("changeState"); },
-                tooltipShow: function (e) { console.log("tooltipShow"); },
-                tooltipHide: function (e) { console.log("tooltipHide"); }
-            },
-            xAxis: {
-                axisLabel: 'Time (ms)'
-            },
-            yAxis: {
-                axisLabel: 'Voltage (v)',
-                tickFormat: function (d) {
-                    return d3.format('.02f')(d);
-                },
-                axisLabelDistance: -10
-            },
-            callback: function (chart) {
-                console.log("!!! lineChart callback !!!");
-            }
-        },
-        title: {
-            enable: true,
-            text: 'Title for Line Chart'
-        },
-        subtitle: {
-            enable: true,
-            text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
-            css: {
-                'text-align': 'center',
-                'margin': '10px 13px 0px 7px'
-            }
-        },
-        caption: {
-            enable: true,
-            html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec<sup>[1, <a href="https://github.com/krispo/angular-nvd3" target="_blank">2</a>, 3]</sup>.',
-            css: {
-                'text-align': 'justify',
-                'margin': '10px 13px 0px 7px'
-            }
-        }
-    };
-
+    //Testing the new method created
+    $scope.options = createLineChart({
+        xAxisLabel: 'Time(ms)',
+        yAxisLabel: 'Voltage(V)',
+        chartHeight: 300,
+        chartTitle: 'Test Title',
+        chartSubTitle: 'Test subtile lorem ipsum dolarset el.',
+        chartCaption: 'This is a sample caption to set up the chart object for the '
+    });
+    
     $scope.data = sinAndCos();
 
     /*Random Data Generator */
@@ -166,4 +120,154 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q
             }
         ];
     };
+
+    function createLineChart(options) {
+        //Creating the required attributes for the chart
+        var xAxisLabel = null;
+        var yAxisLabel = null;
+        var chartHeight = null;
+        var chartTitle = null;
+        var chartSubTitle = null;
+        var chartCaption = null;
+        //Checking the conditions for the object to create a line chart
+        if (options.xAxisLabel === null || options.xAxisLabel === undefined) {
+            xAxisLabel = "x-axis";
+        } else {
+            xAxisLabel = options.xAxisLabel;
+        }
+        if (options.yAxisLabel === null || options.yAxisLabel === undefined) {
+            yAxisLabel = "y-axis";
+        } else {
+            yAxisLabel = options.yAxisLabel;
+        }
+        if (options.chartHeight === null || options.chartHeight === undefined) {
+            chartHeight = 300;
+        } else {
+            chartHeight = options.chartHeight;
+        }
+        if (options.chartTitle === null || options.chartTitle === undefined) {
+            chartTitle = '';
+        } else {
+            chartTitle = options.chartTitle;
+        }
+        if (options.chartSubTitle === null || options.chartSubTitle === undefined) {
+            chartSubTitle = '';
+        } else {
+            chartSubTitle = options.chartSubTitle;
+        }
+        if (options.chartCaption === null || options.chartCaption === undefined) {
+            chartCaption = '';
+        } else {
+            chartCaption = options.chartCaption;
+        }
+        var _chartObj = {
+            type: 'lineChart',
+            height: chartHeight,
+            margin: {
+                top: 20,
+                right: 20,
+                bottom: 40,
+                left: 55
+            },
+            x: function (d) { return d.x; },
+            y: function (d) { return d.y; },
+            useInteractiveGuideline: true,
+            dispatch: {
+                stateChange: function (e) { console.log("stateChange"); },
+                changeState: function (e) { console.log("changeState"); },
+                tooltipShow: function (e) { console.log("tooltipShow"); },
+                tooltipHide: function (e) { console.log("tooltipHide"); }
+            },
+            xAxis: {
+                axisLabel: xAxisLabel
+            },
+            yAxis: {
+                axisLabel: yAxisLabel,
+                tickFormat: function (d) {
+                    return d3.format('.02f')(d);
+                },
+                axisLabelDistance: -10
+            },
+            callback: function (chart) {
+                console.log("!!! lineChart callback !!!");
+            }
+        };
+        var _title = {
+            enable: chartTitle==''?false: true,
+            text: chartTitle
+        };
+        var _subtitle = {
+            enable: chartSubTitle==''?false: true,
+            text: chartSubTitle,
+        };
+        var _caption = {
+            enable: chartCaption==''?false: true,
+            text: chartCaption,
+            css: {
+                'text-align': 'justify',
+                'margin': '10px 13px 0px 7px'
+            }
+        };
+
+        return {
+            chart: _chartObj,
+            title: _title,
+            subtitle: _subtitle,
+            caption: _caption
+        };
+    }
 }]);
+/*$scope.options = {
+    chart: {
+        type: 'lineChart',
+        height: 450,
+        margin: {
+            top: 20,
+            right: 20,
+            bottom: 40,
+            left: 55
+        },
+        x: function (d) { return d.x; },
+        y: function (d) { return d.y; },
+        useInteractiveGuideline: true,
+        dispatch: {
+            stateChange: function (e) { console.log("stateChange"); },
+            changeState: function (e) { console.log("changeState"); },
+            tooltipShow: function (e) { console.log("tooltipShow"); },
+            tooltipHide: function (e) { console.log("tooltipHide"); }
+        },
+        xAxis: {
+            axisLabel: 'Time (ms)'
+        },
+        yAxis: {
+            axisLabel: 'Voltage (v)',
+            tickFormat: function (d) {
+                return d3.format('.02f')(d);
+            },
+            axisLabelDistance: -10
+        },
+        callback: function (chart) {
+            console.log("!!! lineChart callback !!!");
+        }
+    },
+    title: {
+        enable: true,
+        text: 'Title for Line Chart'
+    },
+    subtitle: {
+        enable: true,
+        text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
+        css: {
+            'text-align': 'center',
+            'margin': '10px 13px 0px 7px'
+        }
+    },
+    caption: {
+        enable: true,
+        html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec<sup>[1, <a href="https://github.com/krispo/angular-nvd3" target="_blank">2</a>, 3]</sup>.',
+        css: {
+            'text-align': 'justify',
+            'margin': '10px 13px 0px 7px'
+        }
+    }
+};*/

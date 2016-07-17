@@ -1,18 +1,23 @@
 body{
     margin: 0;
     padding: 0;
+    background-color: #eaeaea;
 }
 .navbar {
     border-radius: 0;
 }
 .dashboard-elem {
-    border: 1px solid #f00;
     margin-bottom: 10px;
     min-height: 50px;
 }
+.dashboard-elem>div {
+    background-color: #fff;
+    padding-bottom: 10px;
+    box-shadow: 1px 4px 22px #736f6f;
+}
 .elem-settings{
     position: absolute;
-    right: 5px;
+    right: 20px;
     top: 5px;
     background-color: #b7b7b7;
     color: #fff;
@@ -26,4 +31,19 @@ body{
 }
 .elem-settings:hover{
     opacity: 1;
+}
+.title {
+    text-align: left !important;
+    padding: 0px 15px;
+    padding-top: 8px;
+    display: table-cell;
+    font-size: 19px;
+}
+.subtitle {
+    text-align: left !important;
+    border-bottom: 1px solid #d4c7c7;
+    color: #b3a7a7;
+    font-size: 13px;
+    padding: 0px 15px;
+    padding-bottom: 6px;
 }
