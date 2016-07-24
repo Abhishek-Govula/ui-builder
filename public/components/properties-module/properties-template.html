@@ -18,38 +18,69 @@
                     <!--This is a divider to seggregate the select and properties-->
                 </div>
                 <div class="row">
+                    <!-- Row 1-->
                     <div class="col-sm-12">
                         <p id="props-header">Set the properties of graph</p>
                     </div>
+                    <!-- Row 1 End-->
+
+                    <!-- Row 2-->
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="chart-title">Chart title</label>
-                            <input type="text" class="form-control" id="chart-title" value="Lorem ipsum."/>
+                            <input type="text" class="form-control" id="chart-title" ng-model="chartConfig.chartTitle" />
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="chart-height">Chart height</label>
-                            <input type="text" class="form-control" id="chart-height" value="200"/>
+                            <input type="text" class="form-control" id="chart-height" ng-model="chartConfig.chartHeight" />
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="chart-x-axis">Chart x-axis</label>
-                            <input type="text" class="form-control" id="chart-x-axis" value="x-axis"/>
+                            <input type="text" class="form-control" id="chart-x-axis" ng-model="chartConfig.chartXAxis" />
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="chart-y-axis">Chart y-axis</label>
-                            <input type="text" class="form-control" id="chart-y-axis" value="y-axis"/>
+                            <input type="text" class="form-control" id="chart-y-axis" ng-model="chartConfig.chartYAxis" />
                         </div>
                     </div>
+                    <!-- Row 2 End-->
+
+                    <!-- Row 3-->
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="chart-title">Chart subtitle</label>
+                            <input type="text" class="form-control" id="chart-title" ng-model="chartConfig.chartSubTitle" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="chart-title">Chart caption</label>
+                            <input type="text" class="form-control" id="chart-title" ng-model="chartConfig.chartCaption" />
+                        </div>
+                    </div>
+                    <!--<div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="chart-title">Chart title</label>
+                            <input type="text" class="form-control" id="chart-title" ng-model="chartTitle" value="Lorem ipsum."/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="chart-title">Chart title</label>
+                            <input type="text" class="form-control" id="chart-title" ng-model="chartTitle" value="Lorem ipsum."/>
+                        </div>
+                    </div>-->
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" ng-click="saveChanges()">Save changes</button>
             </div>
         </div>
         <!-- /.modal-content -->

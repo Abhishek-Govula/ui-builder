@@ -1,6 +1,6 @@
 var rootApp = angular.module('ui-creator', ['ui.router', 'nvd3', 'properties-module']);
 
-rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q, $compile) {
+rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', function ($scope, $q, $compile, $rootScope) {
     $('#main-div').text("Jquery, Angular , UI Router, Bootstrap Libraries loaded");
 
     // The heart of the application is here
@@ -25,7 +25,60 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q
                 }]
         }];
     }
+    //Chart data and config that will be binded to the ui fo the chart
+    $scope.chartConfigArr = [];
+    $scope.chartDataArr = [];
+
+    //listening to the events for the chart added function
+    $rootScope.$on('chartAdded', function (event, data) {
+        var _chartConfigObj = data;
+        var _chartOptions = createLineChart({
+            xAxisLabel: _chartConfigObj.chartXAxis,
+            yAxisLabel: _chartConfigObj.chartYAxis,
+            chartHeight: _chartConfigObj.chartHeight,
+            chartTitle: _chartConfigObj.chartTitle,
+            chartSubTitle: _chartConfigObj.chartSubTitle,
+            chartCaption: _chartConfigObj.chartCaption,
+        });
+        $scope.chartConfigArr.push(_chartOptions);
+
+        $scope.chartDataArr.push(sinAndCos());
+        //<nvd3 options="chartConfigArr[0]" data="chartDataArr[0]" class="with-3d-shadow with-transitions"></nvd3>
+
+        var elementHTML = '<div class="col-sm-6 dashboard-elem">' +
+                            '<div>'+
+                                '<div class="elem-settings" ng-click="openSettings(this)">' +
+                                    '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
+                                '</div>' +
+                                '<div>'+
+                                    '<nvd3 options="chartConfigArr[0]" data="chartDataArr[0]" class="with-3d-shadow with-transitions"></nvd3>'+
+                                '</div>' +
+                            '</div>' +
+                            /*'<div class="col-sm-6 dashboard-elem">' +
+                                '<div class="elem-settings" ng-click="openSettings(this)">' +
+                                    '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
+                                '</div>' +
+                                '<div>Sample content</div>' +
+                            '</div>'+ */
+                          '</div>';
+        var elementCreated = createElement(elementHTML);
+        elementCreated.then(function successCallback(successObj) {
+            console.log(successObj);
+            $("html, body").animate({ scrollTop: $(document).height() - $(window).height() });
+
+            //Now hiding the modal, after the graph has been created
+            $('#properties-modal').modal('hide');
+
+        }, function errorCallback(errorObj) {
+            console.log(errorObj);
+        }, function notifyCallback(notifObj) {
+            console.log(notifObj);
+        });
+    });
     $scope.addNewRow = function () {
+        $scope.openSettings(this);
+
+        /*
         var elementHTML = '<div class="row">' +
             '<div class="col-sm-6 dashboard-elem">' +
             '<div class="elem-settings" ng-click="openSettings(this)">' +
@@ -48,7 +101,7 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q
             console.log(errorObj);
         }, function notifyCallback(notifObj) {
             console.log(notifObj);
-        });
+        });*/
     }
     function createElement(elementText) {
         var deferred = $q.defer();
@@ -83,7 +136,7 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q
         chartSubTitle: 'Test subtile lorem ipsum dolarset el.',
         chartCaption: 'This is a sample caption to set up the chart object for the '
     });
-    
+
     $scope.data = sinAndCos();
 
     /*Random Data Generator */
@@ -193,15 +246,15 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', function ($scope, $q
             }
         };
         var _title = {
-            enable: chartTitle==''?false: true,
+            enable: chartTitle == '' ? false : true,
             text: chartTitle
         };
         var _subtitle = {
-            enable: chartSubTitle==''?false: true,
+            enable: chartSubTitle == '' ? false : true,
             text: chartSubTitle,
         };
         var _caption = {
-            enable: chartCaption==''?false: true,
+            enable: chartCaption == '' ? false : true,
             text: chartCaption,
             css: {
                 'text-align': 'justify',
