@@ -1,6 +1,6 @@
 var rootApp = angular.module('ui-creator', ['ui.router', 'nvd3', 'properties-module']);
 
-rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', function ($scope, $q, $compile, $rootScope) {
+rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', 'mainService', function ($scope, $q, $compile, $rootScope, mainService) {
     $('#main-div').text("Jquery, Angular , UI Router, Bootstrap Libraries loaded");
 
     // The heart of the application is here
@@ -29,9 +29,26 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', functi
     $scope.chartConfigArr = [];
     $scope.chartDataArr = [];
 
+    //First we maintain the sync with the data and config, by storing that inside a global scope of a service
+    $rootScope.$on('addConfig', function (event, data) {
+        //Adding the config data into the service
+        mainService.addNewConfigObj(data);
+
+        //Adding the data into the service
+        mainService.addNewDataObj(sinAndCos());
+
+        //Now emitting the event to add the chart into the UI
+        $scope.$emit('addChart', data);
+    });
+
+    //Constant variable to maintain the count of the data and the config
+    var __COUNT = 0;
     //listening to the events for the chart added function
-    $rootScope.$on('chartAdded', function (event, data) {
-        var _chartConfigObj = data;
+    $scope.$on('addChart', function (event, data) {
+        alert("Came into the add chart");
+        // var _chartConfigObj = data;
+        var _chartConfigObj = mainService.getRecentConfigObj();
+
         var _chartOptions = createLineChart({
             xAxisLabel: _chartConfigObj.chartXAxis,
             yAxisLabel: _chartConfigObj.chartYAxis,
@@ -51,15 +68,9 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', functi
                                     '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
                                 '</div>' +
                                 '<div>'+
-                                    '<nvd3 options="chartConfigArr[0]" data="chartDataArr[0]" class="with-3d-shadow with-transitions"></nvd3>'+
+                                    '<nvd3 options="chartConfigArr['+__COUNT+']" data="chartDataArr['+__COUNT+']" class="with-3d-shadow with-transitions"></nvd3>'+
                                 '</div>' +
                             '</div>' +
-                            /*'<div class="col-sm-6 dashboard-elem">' +
-                                '<div class="elem-settings" ng-click="openSettings(this)">' +
-                                    '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
-                                '</div>' +
-                                '<div>Sample content</div>' +
-                            '</div>'+ */
                           '</div>';
         var elementCreated = createElement(elementHTML);
         elementCreated.then(function successCallback(successObj) {
@@ -68,6 +79,9 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', functi
 
             //Now hiding the modal, after the graph has been created
             $('#properties-modal').modal('hide');
+            
+            //Incrementing the count to maintain the number of data elements
+            __COUNT++ ;
 
         }, function errorCallback(errorObj) {
             console.log(errorObj);
@@ -75,6 +89,7 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', functi
             console.log(notifObj);
         });
     });
+
     $scope.addNewRow = function () {
         $scope.openSettings(this);
 

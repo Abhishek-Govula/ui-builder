@@ -32,7 +32,8 @@ propertiesModule.controller('propertiesCtrl', ['$scope', '$rootScope', function 
     }
 
     $scope.saveChanges = function () {
-        $rootScope.$emit('chartAdded', $scope.chartConfig);
+        $rootScope.$emit('addConfig', $scope.chartConfig);
+        //$rootScope.$emit('chartAdded', $scope.chartConfig);
         //console.log("Event emitted");
     }
 }]);
