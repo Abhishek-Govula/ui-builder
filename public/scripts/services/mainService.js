@@ -4,6 +4,18 @@ rootApp.service('mainService', [function () {
     var _dataArr = null;
     var _configArr = null;
 
+    this.getDataFromIndex = function(index){
+        return _dataArr[index];
+    }
+    this.setDataAtIndex = function (index, dataObj) {
+        _dataArr[index] = dataObj;
+    }
+    this.getConfigFromIndex = function (index) {
+        return _configArr[index];
+    }
+    this.setConfigAtIndex = function (index, configObj) {
+        _configArr[index] = configObj;
+    }
     this.setDataArray = function (dataArr) {
         _dataArr = dataArr;
     }

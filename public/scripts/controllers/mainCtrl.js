@@ -6,8 +6,22 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', 'mainS
     // The heart of the application is here
     //We open up the model and ask for the properties to be entered here
     $scope.openSettings = function (elem) {
-        //Getting the modal and opening it explicity
-        $('#properties-modal').modal();
+        //If the element is null, that implies, that the settings is opened from a new element addition
+        //Else, an existing graph has been selected
+        if (elem !== null) {
+            if($(elem.target).attr("elem-unique-id")!=null || $(elem.target).attr("elem-unique-id")!=undefined){
+                console.log($(elem.target).attr("elem-unique-id"));
+            } else{
+                // console.log(elem.target);
+                console.log($(elem.target).parent().attr("elem-unique-id"));
+            }
+            
+        } else {
+            console.log(elem);
+            //Getting the modal and opening it explicity
+            $('#properties-modal').modal();
+        }
+        
     }
 
     $scope.changeLineData = function () {
@@ -45,7 +59,7 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', 'mainS
     var __COUNT = 0;
     //listening to the events for the chart added function
     $scope.$on('addChart', function (event, data) {
-        alert("Came into the add chart");
+        // alert("Came into the add chart");
         // var _chartConfigObj = data;
         var _chartConfigObj = mainService.getRecentConfigObj();
 
@@ -63,15 +77,15 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', 'mainS
         //<nvd3 options="chartConfigArr[0]" data="chartDataArr[0]" class="with-3d-shadow with-transitions"></nvd3>
 
         var elementHTML = '<div class="col-sm-6 dashboard-elem">' +
-                            '<div>'+
-                                '<div class="elem-settings" ng-click="openSettings(this)">' +
-                                    '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
-                                '</div>' +
-                                '<div>'+
-                                    '<nvd3 options="chartConfigArr['+__COUNT+']" data="chartDataArr['+__COUNT+']" class="with-3d-shadow with-transitions"></nvd3>'+
-                                '</div>' +
-                            '</div>' +
-                          '</div>';
+            '<div>' +
+            '<div class="elem-settings" ng-click="openSettings($event)" elem-unique-id="'+__COUNT+'">' +
+            '<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>' +
+            '</div>' +
+            '<div>' +
+            '<nvd3 options="chartConfigArr[' + __COUNT + ']" data="chartDataArr[' + __COUNT + ']" class="with-3d-shadow with-transitions"></nvd3>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
         var elementCreated = createElement(elementHTML);
         elementCreated.then(function successCallback(successObj) {
             console.log(successObj);
@@ -79,9 +93,9 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', 'mainS
 
             //Now hiding the modal, after the graph has been created
             $('#properties-modal').modal('hide');
-            
+
             //Incrementing the count to maintain the number of data elements
-            __COUNT++ ;
+            __COUNT++;
 
         }, function errorCallback(errorObj) {
             console.log(errorObj);
@@ -91,7 +105,7 @@ rootApp.controller('mainCtrl', ['$scope', '$q', '$compile', '$rootScope', 'mainS
     });
 
     $scope.addNewRow = function () {
-        $scope.openSettings(this);
+        $scope.openSettings(null);
 
         /*
         var elementHTML = '<div class="row">' +
