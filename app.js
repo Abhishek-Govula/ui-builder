@@ -20,12 +20,21 @@ app.route('/')
         res.sendFile(___dirname + '/public/index.html');
     });
 
+app.route('/test')
+    .get(function (req, res) {
+        console.log("Calling the get data method");
+        mongoDBUtil.listCollection(function (records) {
+            console.log(records[0].data.values);
+            res.send(records[0].data.values);
+            console.log("Done!!");
+            mongoDBUtil.close();
+        });
+        console.log("Running.....");
+    });
 app.listen(portNo);
 console.log("App has started on port: " + portNo);
 
-for (var i = 0; i < 10; i++){
-    console.log("Iteration " + (i + 1) + " ----------------");
-    mongoDBUtil.listCollection();
-}
-
-mongoDBUtil.close();
+// mongoDBUtil.listCollection(function (records) {
+//     console.log(records[0].data.values);
+//     mongoDBUtil.close();
+// });

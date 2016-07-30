@@ -45,11 +45,12 @@ function getDB(callback) {
     }
 }
 
-function listCollection() {
+function listCollection(callback) {
     if (_db == null) {
         var myDb = getDB(function (db) {
-            findDocuments(db, function () {
-                console.log("Finished");
+            findDocuments(db, function (docs) {
+                // console.log("Finished");
+                callback(docs);
             });
         });
     }
@@ -60,9 +61,9 @@ function listCollection() {
         collection.find({}).toArray(function (err, docs) {
             // assert.equal(err, null);
             // assert.equal(2, docs.length);
-            console.log("Found the following records");
-            console.dir(docs);
-            db.close();
+            // console.log("Found the following records");
+            // console.dir(docs);
+            // db.close();
             callback(docs);
         });
     }
@@ -71,6 +72,8 @@ function closeDbConnection(params) {
     if (_db != null) {
         console.log("Connection is not null and closing it");
         _db.close();
+        //Making the db connection null again
+        _db = null;
     } else {
         console.log("Connection null, therefore no use of closing it");
     }
