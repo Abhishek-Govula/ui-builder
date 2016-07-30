@@ -22,3 +22,10 @@ app.route('/')
 
 app.listen(portNo);
 console.log("App has started on port: " + portNo);
+
+for (var i = 0; i < 10; i++){
+    console.log("Iteration " + (i + 1) + " ----------------");
+    mongoDBUtil.listCollection();
+}
+
+mongoDBUtil.close();
